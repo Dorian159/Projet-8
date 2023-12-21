@@ -50,6 +50,12 @@ arrowLeft.addEventListener("click", () => {
 // Fonction permettant de faire défiler le carousel
 function moveSlide(sens) {
 	number = number + sens;
+	if (number > slides.length - 1) {
+        number = 0; // Revient à la première diapositive
+    }
+    if (number < 0) {
+        number = slides.length - 1; // Revient à la dernière diapositive
+    }
 	document.querySelector(".banner-img").src = './assets/images/slideshow/' + slides[number] ["image"]; 
 	document.querySelector("#banner p").innerHTML = slides[number] ["tagLine"];
 }
