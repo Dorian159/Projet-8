@@ -17,20 +17,9 @@ const slides = [
 	}
 ]
 
-const arrowRight = document.querySelector("#banner .arrow_right")
-const arrowLeft = document.querySelector("#banner .arrow_left")
-console.log()
+let number = 0
 
-arrowRight.addEventListener("click", () => {
-    console.log("Vous avez cliqué sur le bouton droit")
-});
-
-arrowLeft.addEventListener("click", () => {
-    console.log("Vous avez cliqué sur le bouton gauche")
-});
-
-
-// Partie Ajout des bullet points au slider
+// Ajout des bullet points au slider
 
 const bulletDiv = document.querySelector("#banner .dots")
 
@@ -38,10 +27,42 @@ for (let i = 0; i < slides.length; i++) {
 	const bullet = document.createElement("span")
 	bulletDiv.appendChild(bullet)
 	bullet.classList.add("dot")
-    bullet.classList.add(`dot${i}`); // Ajout de classes dot1, dot2, dot3, ...
 	// Ajout de la classe dot_selected au premier élément de la liste
-    if (i === 0) {
+    if (i === number) {
         bullet.classList.add("dot_selected");
     }
 	console.log(bullet)
 }
+
+// Flèches de défilement du carousel 
+const arrowRight = document.querySelector("#banner .arrow_right")
+arrowRight.addEventListener("click", () => {
+	moveSlide(1);
+	updateSelectedDot()
+});
+
+const arrowLeft = document.querySelector("#banner .arrow_left")
+arrowLeft.addEventListener("click", () => {
+	moveSlide(-1);
+	updateSelectedDot()
+});
+
+// Fonction permettant de faire défiler le carousel
+function moveSlide(sens) {
+	number = number + sens;
+	document.querySelector(".banner-img").src = './assets/images/slideshow/' + slides[number] ["image"]; 
+	document.querySelector("#banner p").innerHTML = slides[number] ["tagLine"];
+}
+
+// Fonction permettant de faire défiler les points bullet 
+function updateSelectedDot() {
+    const dots = document.querySelectorAll("#banner .dots .dot");
+    for (let i = 0; i < dots.length; i++) {
+        dots[i].classList.remove("dot_selected");
+        if (i === number) {
+            dots[i].classList.add("dot_selected");
+        }
+    }
+}
+
+
